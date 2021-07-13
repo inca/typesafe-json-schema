@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "JSON schema with better static types support",
   "main": "out/main/index.js",
+  "types": "out/main/index.d.ts",
   "scripts": {
     "clean": "rm -rf out *.tsbuildinfo",
     "dev": "tsc -w",
