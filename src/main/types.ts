@@ -1,5 +1,5 @@
 export type BaseSchema = {
-    name?: string;
+    title?: string;
     description?: string;
     enum?: any[];
     const?: any;

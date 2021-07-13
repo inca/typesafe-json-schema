@@ -20,7 +20,7 @@ export class Schema<T> {
             removeAdditional: 'all',
             useDefaults: true,
             coerceTypes: true,
-            keywords: ['optional', 'name', 'description'],
+            keywords: ['optional'],
             ...ajvOptions
         });
         this.validateFn = this.ajv.compile<T>(this.schema as any);
