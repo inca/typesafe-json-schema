@@ -1,0 +1,1 @@
+# Typesafe JSON schema
