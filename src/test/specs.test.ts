@@ -26,7 +26,7 @@ interface Book {
     author: Person;
 }
 
-const Book: Schema<Book> = new Schema<Book>({
+const Book = new Schema<Book>({
     schema: {
         type: 'object',
         properties: {
@@ -37,6 +37,25 @@ const Book: Schema<Book> = new Schema<Book>({
                 items: { type: 'string', minLength: 1 },
             },
             author: Person.schema,
+        }
+    }
+});
+
+interface Node {
+    name: string;
+    children?: Node[];
+}
+
+const Node = new Schema<Node>({
+    schema: {
+        type: 'object',
+        properties: {
+            name: { type: 'string' },
+            children: {
+                type: 'array',
+                items: { $ref: '#' } as any,
+                optional: true,
+            }
         }
     }
 });
@@ -94,6 +113,23 @@ describe('Schema', () => {
             } catch (err) {
                 assert.strictEqual(err.name, 'ValidationError');
             }
+        });
+
+        it('decodes recursive objects', () => {
+            const node = Node.decode({
+                name: 'foo',
+                children: [
+                    { name: 'bar' },
+                    { name: 'baz', children: [{ name: 'bazz' }] },
+                ],
+            });
+            assert.deepStrictEqual(node, {
+                name: 'foo',
+                children: [
+                    { name: 'bar' },
+                    { name: 'baz', children: [{ name: 'bazz' }] },
+                ],
+            });
         });
     });
 

@@ -1,4 +1,6 @@
 export type BaseSchema = {
+    $id?: string;
+    $ref?: string;
     title?: string;
     description?: string;
     enum?: any[];
