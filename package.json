@@ -1,6 +1,6 @@
 {
   "name": "typesafe-json-schema",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "JSON schema with better static types support",
   "main": "out/main/index.js",
   "types": "out/main/index.d.ts",
