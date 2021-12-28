@@ -1,3 +1,12 @@
+export type JsonSchema<T> = (
+    T extends string ? StringSchema :
+    T extends number ? NumberSchema :
+    T extends boolean ? BooleanSchema :
+    T extends Array<infer P> ? ArraySchema<P> :
+    T extends object ? ObjectSchema<T> :
+    never
+) & BaseSchema;
+
 export type BaseSchema = {
     $id?: string;
     $ref?: string;
@@ -50,15 +59,6 @@ export type ArraySchema<T> = {
     contains?: JsonSchema<T>;
 }
 
-export type JsonSchema<T> = (
-    T extends string ? StringSchema :
-    T extends number ? NumberSchema :
-    T extends boolean ? BooleanSchema :
-    T extends Array<infer P> ? ArraySchema<P> :
-    T extends object ? ObjectSchema<T> :
-    never
-) & BaseSchema;
-
 export type OptionalSchema<T> = JsonSchema<T> & { optional: true };
 export type RequiredSchema<T> = Omit<JsonSchema<T>, 'optional'>;
 export type NullableSchema<T> = JsonSchema<T> & { nullable: true };
@@ -79,6 +79,3 @@ type InferOptionalNullable<T, K extends keyof T> =
     ) : (
         null extends T[K] ? RequiredNullableSchema<T[K]> : RequiredNonNullableSchema<T[K]>
     );
-
-export type JsonSchemaTypePrimitive = 'null' | 'string' | 'number' | 'integer' | 'boolean' | 'array' | 'object';
-export type JsonSchemaType = JsonSchemaTypePrimitive | JsonSchemaTypePrimitive[];

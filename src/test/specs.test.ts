@@ -110,7 +110,7 @@ describe('Schema', () => {
                     author: { name: 'Joe', age: 'ok' }
                 });
                 throw new Error('UnexpectedSuccess');
-            } catch (err) {
+            } catch (err: any) {
                 assert.strictEqual(err.name, 'ValidationError');
             }
         });
